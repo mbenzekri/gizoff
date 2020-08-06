@@ -1,0 +1,139 @@
+<style>
+
+    #header {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 48px;
+        background-color: #208AAE;
+        margin-left: 0;
+        padding-left: 0;
+        border-left: 0;
+    }
+
+    #footer {
+        position: absolute;
+        top: calc(100% - 48px);
+        left: 0px;
+        width: 100%;
+        background-color: #208AAE;
+    }
+
+    #map {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
+    #work {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        background-color: #208AAE;
+    }
+
+
+    /* Extra small devices (phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+        #work {
+            width: 100%;
+        }
+
+    }
+
+    /* Small devices (portrait tablets and large phones, 600px and up) */
+    @media only screen and (min-width: 600px) {
+        #work {
+            width: 100%;
+        }
+
+    }
+
+    /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (min-width: 768px) {
+        #work {
+            width: 480px;
+        }
+
+    }
+
+    /* Large devices (laptops/desktops, 992px and up) */
+    @media only screen and (min-width: 992px) {
+        #work {
+            width: 480px;
+        }
+
+    }
+
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+    @media only screen and (min-width: 1200px) {
+        #work {
+            width: 480px;
+        }
+
+    }
+</style>
+<div id="map"></div>
+<div *ngIf=dlgs.work id="work"></div>
+<!-- Toolbar -->
+<mat-toolbar id=header>
+
+    <button [hidden]="dlgs.work" mat-icon-button (click)="openWork()">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+    <button [hidden]="!dlgs.work" mat-icon-button (click)="openWork()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="mi-spacer" title="feature info"></span>
+    <button [hidden]=!dlgs.select mat-icon-button>
+        <mat-icon>touch_app</mat-icon>
+    </button>
+    <button [hidden]=!dlgs.select mat-icon-button>
+        <mat-icon>clear</mat-icon>
+    </button>
+    <mi-geosearch [hidden]=!dlgs.search ></mi-geosearch>
+    <span class="mi-spacer" title="feature info"></span>
+
+    <button mat-icon-button (click)="search()">
+        <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button>
+        <mat-icon>gps_not_fixed</mat-icon>
+    </button>
+    <button mat-icon-button>
+        <mat-icon>straighten</mat-icon>
+    </button>
+    <button mat-icon-button>
+        <mat-icon>info</mat-icon>
+    </button>
+    <button mat-icon-button>
+        <mat-icon>pan_tool</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>layers</mat-icon>
+        <span>Layers ... </span>
+    </button>
+    <button mat-menu-item (click)="syncDlg()">
+        <mat-icon>sync</mat-icon>
+        <span>Sync ...</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Settings ... </span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>help</mat-icon>
+        <span>About ... </span>
+    </button>
+</mat-menu>
+<!--mat-toolbar id=footer color="primary">ZZZ</mat-toolbar-->

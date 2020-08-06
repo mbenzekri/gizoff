@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>Sync your datasets !</h2>
+
+<mat-dialog-content>
+    <mat-expansion-panel [hidden]="registered.length === 0" [expanded]="true" hideToggle style="margin-bottom: 10px;">
+        <mat-expansion-panel-header> Select a dataset </mat-expansion-panel-header>
+        <mat-toolbar *ngFor="let syncer of registered" style="margin-bottom: 10px;">
+            <mat-toolbar-row>
+                <mat-icon [hidden]="syncer !== current" (click)="toggle(syncer)">radio_button_checked</mat-icon>
+                <mat-icon [hidden]="syncer === current" (click)="toggle(syncer)">radio_button_unchecked</mat-icon>
+                <span class="mi-spacer"></span>
+                {{syncer.dataset.name}}
+                <span class="mi-spacer"></span>
+                <button mat-button (click)="sync(syncer)" [disabled]="syncer.syncing || (syncer.synced() === syncer.size())"  mat-mini-fab color="primary" aria-label="sync dataset">
+                    <mat-icon>sync</mat-icon>
+                </button>
+                <button mat-button (click)="delete(syncer)" [disabled]=syncer.syncing mat-mini-fab color="warn" aria-label="sync dataset">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-toolbar-row>
+            <mat-toolbar-row *ngIf="syncer.syncing">
+                <mat-progress-bar [value]=syncer.pcwritten ></mat-progress-bar>
+            </mat-toolbar-row>
+            <mat-toolbar-row *ngIf="syncer.syncing">
+                <span>{{ syncer.written }} / {{ syncer.total }}</span>
+                <span class="mi-spacer"></span>
+                <button mat-button (click)="abort(syncer)" mat-mini-fab color="warn" aria-label="sync dataset">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        </mat-expansion-panel>
+    <mat-expansion-panel [(expanded)]="expanded" style="margin-bottom: 10px;">
+        <mat-expansion-panel-header> Add a Dataset </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+            <mat-toolbar *ngFor="let syncer of unregistered" style="margin-bottom: 10px;">
+                <span>{{syncer.dataset.name}}</span>
+                <span class="mi-spacer"></span>
+                <button [hidden]="syncer.reachable" mat-mini-fab color="default" aria-label="not reachable">
+                    <mat-icon>sync_disabled</mat-icon>
+                </button>
+                <button [hidden]="!syncer.reachable" (click)="register(syncer)" mat-mini-fab color="primary" aria-label="add dataset">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-toolbar>
+        </ng-template>
+    </mat-expansion-panel>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button class="mat-raised-button " (click)="close()">Quit</button>
+</mat-dialog-actions>

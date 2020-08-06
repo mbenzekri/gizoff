@@ -1,0 +1,20 @@
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+/* You can add global styles to this file, and also import other style files */
+html, body, #map {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #b2ebf2;
+}
+
+.mi-spacer {
+    flex: 1 1 auto;
+}
+[hidden] {
+    display: none !important;
+}
